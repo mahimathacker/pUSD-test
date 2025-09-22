@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PYUSD Donation App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .wallet-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 2px solid #e9ecef;
+        }
+
+        .wallet-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .info-item {
+            text-align: left;
+        }
+
+        .info-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .connect-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .connect-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .connect-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .donation-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid #e9ecef;
+        }
+
+        .donation-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-label {
+            display: block;
+            text-align: left;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .amount-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .amount-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .donate-btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .donate-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+        }
+
+        .donate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 500;
+            background: #e3f2fd;
+            color: #1976d2;
+            border: 1px solid #bbdefb;
+        }
+
+        .status.error {
+            background: #ffebee;
+            color: #c62828;
+            border-color: #ffcdd2;
+        }
+
+        .status.success {
+            background: #e8f5e8;
+            color: #2e7d32;
+            border-color: #c8e6c9;
+        }
+
+        .contract-info {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f1f3f4;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .contract-address {
+            font-family: monospace;
+            background: white;
+            padding: 8px;
+            border-radius: 5px;
+            margin: 5px 0;
+            word-break: break-all;
+        }
+
+        .contract-balance {
+            font-family: monospace;
+            background: #e8f5e8;
+            padding: 8px;
+            border-radius: 5px;
+            margin: 5px 0;
+            border: 2px solid #4caf50;
+        }
+
+        .contract-balance span {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .wallet-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .info-item {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">💰 PYUSD</div>
+        <div class="subtitle">Secure Donation Platform</div>
+        
+        <div class="wallet-section">
+            <div class="wallet-info">
+                <div class="info-item">
+                    <div class="info-label">Account</div>
+                    <div class="info-value" id="account">Not connected</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Balance</div>
+                    <div class="info-value" id="balance">0.00 PYUSD</div>
+                </div>
+            </div>
+            <button id="connect-wallet" class="connect-btn">Connect Wallet</button>
+        </div>
+
+        <div class="donation-section">
+            <div class="donation-title">Make a Donation</div>
+            <div class="input-group">
+                <label for="amount" class="input-label">Amount (PYUSD)</label>
+                <input 
+                    type="number" 
+                    id="amount" 
+                    class="amount-input" 
+                    placeholder="Enter amount to donate"
+                    step="0.01"
+                    min="0"
+                >
+            </div>
+            <button id="donate" class="donate-btn" disabled>Donate</button>
+        </div>
+
+        <div id="status" class="status">Ready to connect wallet</div>
+
+        <div class="contract-info">
+            <strong>Contract Information:</strong><br>
+            <div class="contract-address">
+                <strong>PYUSD Token:</strong><br>
+                0xCaC524BcA292aaade2DF8A05cC58F0a65B1B3bB9
+            </div>
+            <div class="contract-address">
+                <strong>Donation Contract:</strong><br>
+                0x174599400F6dcFAAbe17aCAE0c6b8992e3c88b0d
+            </div>
+            <div class="contract-balance">
+                <strong>Total Donations:</strong><br>
+                <span id="contract-balance">0.00 PYUSD</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load ethers.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js" 
+            onerror="this.onerror=null; this.src='https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js'"></script>
+    <script>
+        // Wait for ethers to load before initializing the app
+        window.addEventListener('load', function() {
+            if (typeof ethers !== 'undefined') {
+                console.log('ethers.js loaded successfully');
+            } else {
+                console.error('Failed to load ethers.js');
+            }
+        });
+    </script>
+    <script src="pusd.js"></script>
+</body>
+</html>
